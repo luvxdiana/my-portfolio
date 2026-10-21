@@ -235,5 +235,48 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  /* Tech Stack Reveal */
+
+  const techStackSection = document.querySelector(".tech-stack-section");
+
+  if (techStackSection) {
+    const stackCategories =
+      techStackSection.querySelectorAll(".stack-category");
+
+    if (!reducedMotion && "IntersectionObserver" in window) {
+      techStackSection.classList.add("reveal-ready");
+
+      const stackObserver = new IntersectionObserver(
+        (entries, observer) => {
+          const visibleEntries = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort(
+              (a, b) =>
+                a.target.getBoundingClientRect().top -
+                b.target.getBoundingClientRect().top,
+            );
+
+          visibleEntries.forEach((entry, index) => {
+            const category = entry.target;
+
+            category.style.transitionDelay = `${index * 120}ms`;
+
+            category.classList.add("is-visible");
+
+            observer.unobserve(category);
+          });
+        },
+        {
+          threshold: 0.15,
+          rootMargin: "0px 0px -5% 0px",
+        },
+      );
+
+      stackCategories.forEach((category) => {
+        stackObserver.observe(category);
+      });
+    }
+  }
+
   updateActiveNavigation();
 });
