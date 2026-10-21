@@ -269,6 +269,315 @@
           </div>
         </div>
       </section>
+
+      <!-- Projects -->
+      <section id="projects" class="projects-section">
+        <div class="projects-container">
+          <h2 class="projects-heading">
+            <i data-lucide="monitor"></i>
+            <span>Projects</span>
+          </h2>
+
+          <!-- Project Cards -->
+          <div class="projects-grid">
+            <!-- My List -->
+            <article class="project-card">
+              <a
+                href="https://my-list-production.up.railway.app"
+                class="project-preview"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open My List live demo"
+              >
+                <img
+                  src="assets/images/my-list-preview.png"
+                  alt="My List application screenshot"
+                  loading="lazy"
+                />
+              </a>
+
+              <div class="project-info">
+                <h3>My List</h3>
+
+                <div class="project-actions">
+                  <button
+                    type="button"
+                    class="project-button details-button"
+                    data-modal="my-list-modal"
+                  >
+                    <i data-lucide="info"></i>
+                    <span>View Details</span>
+                  </button>
+
+                  <a
+                    href="https://github.com/luvxdiana/my-list"
+                    class="project-button code-button"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i data-lucide="github"></i>
+                    <span>Code</span>
+                  </a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Daily Fortune -->
+            <article class="project-card">
+              <a
+                href="https://luvxdiana.github.io/daily-fortune/"
+                class="project-preview"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open Daily Fortune live demo"
+              >
+                <img
+                  src="assets/images/daily-fortune-preview.png"
+                  alt="Daily Fortune application screenshot"
+                  loading="lazy"
+                />
+              </a>
+
+              <div class="project-info">
+                <h3>Daily Fortune</h3>
+
+                <div class="project-actions">
+                  <button
+                    type="button"
+                    class="project-button details-button"
+                    data-modal="daily-fortune-modal"
+                  >
+                    <i data-lucide="info"></i>
+                    <span>View Details</span>
+                  </button>
+
+                  <a
+                    href="https://github.com/luvxdiana/daily-fortune"
+                    class="project-button code-button"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i data-lucide="github"></i>
+                    <span>Code</span>
+                  </a>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- Tetris Teaser -->
+          <div class="tetris-teaser">
+            <div class="teaser-content">
+              <span class="teaser-label">NEXT LEVEL</span>
+
+              <h3 class="coming-soon" aria-label="COMING SOON...">
+                <span class="coming-text" aria-hidden="true">
+                  <span style="--i: 0">C</span>
+                  <span style="--i: 1">O</span>
+                  <span style="--i: 2">M</span>
+                  <span style="--i: 3">I</span>
+                  <span style="--i: 4">N</span>
+                  <span style="--i: 5">G</span>
+                  <span class="letter-space">&nbsp;</span>
+                  <span style="--i: 6">S</span>
+                  <span style="--i: 7">O</span>
+                  <span style="--i: 8">O</span>
+                  <span style="--i: 9">N</span>
+                </span>
+                <span class="coming-dots" aria-hidden="true">
+                  <span style="--i: 10">.</span>
+                  <span style="--i: 11">.</span>
+                  <span style="--i: 12">.</span>
+                </span>
+              </h3>
+
+              <p class="teaser-project-name">luvxdianaTetris</p>
+            </div>
+
+            <!-- Drag Area -->
+            <div
+              class="tetris-drag-area"
+              aria-label="Interactive Tetris pieces"
+            >
+              <img
+                src="assets/images/tetris/tetromino-t.png"
+                class="draggable-tetromino"
+                data-cols="3"
+                data-rows="2"
+                data-x="0.12"
+                data-y="0.18"
+                alt="Draggable T piece"
+                draggable="false"
+              />
+
+              <img
+                src="assets/images/tetris/tetromino-s.png"
+                class="draggable-tetromino"
+                data-cols="2"
+                data-rows="3"
+                data-x="0.42"
+                data-y="0.30"
+                alt="Draggable S piece"
+                draggable="false"
+              />
+
+              <img
+                src="assets/images/tetris/tetromino-o.png"
+                class="draggable-tetromino"
+                data-cols="2"
+                data-rows="2"
+                data-x="0.70"
+                data-y="0.13"
+                alt="Draggable O piece"
+                draggable="false"
+              />
+
+              <img
+                src="assets/images/tetris/tetromino-l.png"
+                class="draggable-tetromino"
+                data-cols="2"
+                data-rows="3"
+                data-x="0.78"
+                data-y="0.55"
+                alt="Draggable L piece"
+                draggable="false"
+              />
+            </div>
+
+            <div class="drag-hint" aria-hidden="true">
+              <span>Drag me!</span>
+              <i data-lucide="arrow-down-left"></i>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- My List Modal -->
+      <dialog id="my-list-modal" class="project-modal">
+        <div class="modal-content">
+          <button
+            type="button"
+            class="modal-close"
+            aria-label="Close project details"
+          >
+            <i data-lucide="x"></i>
+          </button>
+
+          <h2>My List</h2>
+
+          <p class="modal-subtitle">Full-Stack Web Application</p>
+
+          <h3>About the Project</h3>
+
+          <p>
+            My List is a personal media tracking application designed to help
+            users organize their favorite anime, series, movies, books, and
+            games.
+          </p>
+
+          <p>
+            Users can create accounts, add entries, manage completion statuses,
+            write reviews, give ratings, upload images, and explore their
+            collections through search, filters, and statistics.
+          </p>
+
+          <h3>Technologies Used</h3>
+
+          <div class="modal-technologies">
+            <span>HTML</span>
+            <span>CSS</span>
+            <span>JavaScript</span>
+            <span>Node.js</span>
+            <span>Express.js</span>
+            <span>SQLite</span>
+          </div>
+
+          <div class="modal-actions">
+            <a
+              href="https://my-list-production.up.railway.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="modal-link"
+            >
+              <i data-lucide="external-link"></i>
+              Live Demo
+            </a>
+
+            <a
+              href="https://github.com/luvxdiana/my-list"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="modal-link"
+            >
+              <i data-lucide="github"></i>
+              Source Code
+            </a>
+          </div>
+        </div>
+      </dialog>
+
+      <!-- Daily Fortune Modal -->
+      <dialog id="daily-fortune-modal" class="project-modal">
+        <div class="modal-content">
+          <button
+            type="button"
+            class="modal-close"
+            aria-label="Close project details"
+          >
+            <i data-lucide="x"></i>
+          </button>
+
+          <h2>Daily Fortune</h2>
+
+          <p class="modal-subtitle">Multilingual Progressive Web App</p>
+
+          <h3>About the Project</h3>
+
+          <p>
+            Daily Fortune is an interactive web application that reveals a new
+            fortune every day through an animated envelope.
+          </p>
+
+          <p>
+            The project features a playful pastel design, three languages, a
+            daily countdown, locally saved fortunes, responsive layouts, and
+            Progressive Web App support.
+          </p>
+
+          <h3>Technologies Used</h3>
+
+          <div class="modal-technologies">
+            <span>HTML</span>
+            <span>CSS</span>
+            <span>JavaScript</span>
+            <span>PWA</span>
+            <span>Local Storage</span>
+            <span>Service Worker</span>
+          </div>
+
+          <div class="modal-actions">
+            <a
+              href="https://luvxdiana.github.io/daily-fortune/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="modal-link"
+            >
+              <i data-lucide="external-link"></i>
+              Live Demo
+            </a>
+
+            <a
+              href="https://github.com/luvxdiana/daily-fortune"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="modal-link"
+            >
+              <i data-lucide="github"></i>
+              Source Code
+            </a>
+          </div>
+        </div>
+      </dialog>
     </main>
 
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>

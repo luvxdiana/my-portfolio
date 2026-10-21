@@ -278,5 +278,155 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  /* Project Modals */
+
+  const detailButtons = document.querySelectorAll(".details-button");
+  const projectModals = document.querySelectorAll(".project-modal");
+
+  detailButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const modalId = button.dataset.modal;
+      const modal = document.getElementById(modalId);
+
+      if (modal && !modal.open) {
+        modal.showModal();
+        document.body.classList.add("modal-open");
+      }
+    });
+  });
+
+  projectModals.forEach((modal) => {
+    const closeButton = modal.querySelector(".modal-close");
+
+    closeButton?.addEventListener("click", () => {
+      modal.close();
+    });
+
+    modal.addEventListener("click", (event) => {
+      const rect = modal.getBoundingClientRect();
+
+      const outside =
+        event.clientX < rect.left ||
+        event.clientX > rect.right ||
+        event.clientY < rect.top ||
+        event.clientY > rect.bottom;
+
+      if (outside) {
+        modal.close();
+      }
+    });
+
+    modal.addEventListener("close", () => {
+      document.body.classList.remove("modal-open");
+    });
+  });
+
+  /* Tetris Drag */
+
+  const dragArea = document.querySelector(".tetris-drag-area");
+  const draggablePieces = document.querySelectorAll(".draggable-tetromino");
+
+  if (dragArea) {
+    const clamp = (value, min, max) => {
+      return Math.max(min, Math.min(value, max));
+    };
+
+    draggablePieces.forEach((piece) => {
+      let isDragging = false;
+      let pointerId = null;
+      let grabX = 0;
+      let grabY = 0;
+
+      piece.addEventListener("dragstart", (event) => {
+        event.preventDefault();
+      });
+
+      piece.addEventListener("pointerdown", (event) => {
+        if (event.pointerType === "mouse" && event.button !== 0) {
+          return;
+        }
+
+        const areaRect = dragArea.getBoundingClientRect();
+        const pieceRect = piece.getBoundingClientRect();
+
+        grabX = event.clientX - pieceRect.left;
+        grabY = event.clientY - pieceRect.top;
+
+        piece.style.left = `${pieceRect.left - areaRect.left}px`;
+        piece.style.top = `${pieceRect.top - areaRect.top}px`;
+
+        isDragging = true;
+        pointerId = event.pointerId;
+
+        piece.classList.add("is-dragging");
+        piece.setPointerCapture(event.pointerId);
+
+        event.preventDefault();
+      });
+
+      piece.addEventListener("pointermove", (event) => {
+        if (!isDragging || event.pointerId !== pointerId) {
+          return;
+        }
+
+        const areaRect = dragArea.getBoundingClientRect();
+
+        const maxX = Math.max(0, areaRect.width - piece.offsetWidth);
+
+        const maxY = Math.max(0, areaRect.height - piece.offsetHeight);
+
+        const x = clamp(event.clientX - areaRect.left - grabX, 0, maxX);
+
+        const y = clamp(event.clientY - areaRect.top - grabY, 0, maxY);
+
+        piece.style.left = `${x}px`;
+        piece.style.top = `${y}px`;
+        piece.dataset.moved = "true";
+      });
+
+      function stopDragging(event) {
+        if (!isDragging || event.pointerId !== pointerId) {
+          return;
+        }
+
+        isDragging = false;
+        pointerId = null;
+
+        piece.classList.remove("is-dragging");
+
+        if (piece.hasPointerCapture(event.pointerId)) {
+          piece.releasePointerCapture(event.pointerId);
+        }
+      }
+
+      piece.addEventListener("pointerup", stopDragging);
+      piece.addEventListener("pointercancel", stopDragging);
+    });
+
+    window.addEventListener("resize", () => {
+      const areaRect = dragArea.getBoundingClientRect();
+
+      draggablePieces.forEach((piece) => {
+        if (piece.dataset.moved !== "true") return;
+
+        const maxX = Math.max(0, areaRect.width - piece.offsetWidth);
+
+        const maxY = Math.max(0, areaRect.height - piece.offsetHeight);
+
+        piece.style.left = `${clamp(
+          parseFloat(piece.style.left) || 0,
+          0,
+          maxX,
+        )}px`;
+
+        piece.style.top = `${clamp(
+          parseFloat(piece.style.top) || 0,
+          0,
+          maxY,
+        )}px`;
+      });
+    });
+  }
+
   updateActiveNavigation();
 });
