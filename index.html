@@ -7,6 +7,8 @@
     <title>Diana Nikitina | Portfolio</title>
 
     <link rel="stylesheet" href="style.css" />
+
+    <script src="translations.js" defer></script>
     <script src="script.js" defer></script>
   </head>
   <body>
@@ -18,7 +20,37 @@
         </a>
 
         <nav class="navigation" aria-label="Main navigation">
-          <button class="language-button" type="button">EN</button>
+          <!-- Language Switcher -->
+          <div class="language-switcher">
+            <button
+              class="language-button"
+              id="language-button"
+              type="button"
+              aria-label="Select language"
+              aria-expanded="false"
+              aria-controls="language-menu"
+            >
+              EN
+            </button>
+
+            <div class="language-menu" id="language-menu" hidden>
+              <button
+                type="button"
+                class="language-option active"
+                data-lang="en"
+              >
+                EN
+              </button>
+
+              <button type="button" class="language-option" data-lang="uk">
+                UA
+              </button>
+
+              <button type="button" class="language-option" data-lang="no">
+                NO
+              </button>
+            </div>
+          </div>
 
           <a href="#home" class="nav-link active">
             <i data-lucide="house"></i>

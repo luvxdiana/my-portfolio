@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* Typewriter */
 
+  /* Typewriter */
+
   const prefix = document.getElementById("typing-prefix");
   const name = document.getElementById("typing-name");
   const title = document.querySelector(".home-title");
@@ -15,16 +17,27 @@ document.addEventListener("DOMContentLoaded", () => {
     "(prefers-reduced-motion: reduce)",
   ).matches;
 
-  if (prefix && name && title && !reducedMotion) {
-    const prefixText = prefix.textContent;
-    const nameText = name.textContent;
-    const fullText = prefixText + nameText;
+  let typingTimer = null;
 
-    title.style.minHeight = `${Math.ceil(title.getBoundingClientRect().height)}px`;
+  function startTypewriter(prefixText, nameText) {
+    if (!prefix || !name || !title) return;
+
+    clearTimeout(typingTimer);
+
+    prefix.textContent = prefixText;
+    name.textContent = nameText;
+
+    title.style.minHeight = "";
+
+    const titleHeight = title.getBoundingClientRect().height;
+    title.style.minHeight = `${Math.ceil(titleHeight)}px`;
+
+    if (reducedMotion) return;
 
     prefix.textContent = "";
     name.textContent = "";
 
+    const fullText = prefixText + nameText;
     let index = 0;
 
     function typeText() {
@@ -39,11 +52,386 @@ document.addEventListener("DOMContentLoaded", () => {
 
       name.textContent = fullText.slice(prefixText.length, index);
 
-      setTimeout(typeText, 85);
+      typingTimer = setTimeout(typeText, 85);
     }
 
-    setTimeout(typeText, 400);
+    typingTimer = setTimeout(typeText, 350);
   }
+
+  /* Language Switcher */
+
+  const languageButton = document.getElementById("language-button");
+  const languageMenu = document.getElementById("language-menu");
+  const languageOptions = document.querySelectorAll(".language-option");
+
+  function closeLanguageMenu() {
+    if (!languageMenu || !languageButton) return;
+
+    languageMenu.hidden = true;
+    languageButton.setAttribute("aria-expanded", "false");
+  }
+
+  function setLanguage(lang) {
+    const translation = translations[lang];
+
+    if (!translation) return;
+
+    document.documentElement.lang = lang === "no" ? "nb" : lang;
+
+    /* Navigation */
+
+    const navigationTexts = {
+      home: translation.navigation.home,
+      education: translation.navigation.education,
+      "tech-stack": translation.navigation.techStack,
+      projects: translation.navigation.projects,
+      "about-me": translation.navigation.aboutMe,
+    };
+
+    document.querySelectorAll(".nav-link").forEach((link) => {
+      const id = link.getAttribute("href")?.slice(1);
+      const label = link.querySelector("span");
+
+      if (label && navigationTexts[id]) {
+        label.textContent = navigationTexts[id];
+      }
+    });
+
+    /* Home */
+
+    startTypewriter(translation.home.greeting, translation.home.name);
+
+    const description = document.querySelector(".home-description");
+
+    if (description) {
+      description.innerHTML = translation.home.description;
+    }
+
+    /* Education */
+
+    const education = translation.education;
+
+    if (education) {
+      const headings = document.querySelectorAll(
+        ".education-section .timeline-heading",
+      );
+
+      [education.educationTitle, education.experienceTitle].forEach(
+        (label, index) => {
+          const heading = headings[index];
+
+          if (!heading) return;
+
+          const textNode = Array.from(heading.childNodes).find(
+            (node) =>
+              node.nodeType === Node.TEXT_NODE && node.textContent.trim(),
+          );
+
+          if (textNode) {
+            textNode.textContent = ` ${label}`;
+          }
+        },
+      );
+
+      function translateTimeline(selector, items) {
+        const elements = document.querySelectorAll(
+          `${selector} .timeline-item`,
+        );
+
+        elements.forEach((element, index) => {
+          const item = items[index];
+
+          if (!item) return;
+
+          element.querySelector("h3").textContent = item.title;
+
+          element.querySelector("p").textContent = item.description;
+
+          element.querySelector("time").textContent = item.date;
+        });
+      }
+
+      translateTimeline(".education-column", education.educationItems);
+
+      translateTimeline(".experience-column", education.experienceItems);
+    }
+
+    /* Tech Stack */
+
+    const techStack = translation.techStack;
+
+    if (techStack) {
+      const stackTitle = document.querySelector(".tech-stack-heading span");
+
+      if (stackTitle) {
+        stackTitle.textContent = techStack.title;
+      }
+
+      const stackHeadings = document.querySelectorAll(".stack-category h3");
+
+      stackHeadings.forEach((heading, index) => {
+        const translatedTitle = techStack.categories[index];
+
+        if (translatedTitle) {
+          heading.textContent = translatedTitle;
+        }
+      });
+    }
+
+    /* Projects */
+
+    const projects = translation.projects;
+
+    if (projects) {
+      const projectsTitle = document.querySelector(".projects-heading span");
+
+      if (projectsTitle) {
+        projectsTitle.textContent = projects.title;
+      }
+
+      /* Project Cards */
+
+      document.querySelectorAll(".project-card").forEach((card, index) => {
+        const details = card.querySelector(".details-button span");
+        const code = card.querySelector(".code-button span");
+        const preview = card.querySelector(".project-preview");
+
+        if (details) {
+          details.textContent = projects.viewDetails;
+        }
+
+        if (code) {
+          code.textContent = projects.code;
+        }
+
+        if (preview) {
+          preview.setAttribute(
+            "aria-label",
+            index === 0 ? projects.myListPreview : projects.dailyFortunePreview,
+          );
+        }
+      });
+
+      /* Modal Text */
+
+      function changeTextPreservingIcons(element, value) {
+        if (!element) return;
+
+        const textNode = Array.from(element.childNodes).find(
+          (node) => node.nodeType === Node.TEXT_NODE && node.textContent.trim(),
+        );
+
+        if (textNode) {
+          textNode.textContent = ` ${value}`;
+        }
+      }
+
+      function translateProjectModal(id, content) {
+        const modal = document.getElementById(id);
+
+        if (!modal) return;
+
+        const subtitle = modal.querySelector(".modal-subtitle");
+        const headings = modal.querySelectorAll(".modal-content h3");
+        const paragraphs = modal.querySelectorAll(
+          ".modal-content > p:not(.modal-subtitle)",
+        );
+        const links = modal.querySelectorAll(".modal-link");
+        const closeButton = modal.querySelector(".modal-close");
+
+        if (subtitle) {
+          subtitle.textContent = content.subtitle;
+        }
+
+        if (headings[0]) {
+          headings[0].textContent = projects.about;
+        }
+
+        if (headings[1]) {
+          headings[1].textContent = projects.technologies;
+        }
+
+        paragraphs.forEach((paragraph, index) => {
+          if (content.paragraphs[index]) {
+            paragraph.textContent = content.paragraphs[index];
+          }
+        });
+
+        changeTextPreservingIcons(links[0], projects.liveDemo);
+        changeTextPreservingIcons(links[1], projects.sourceCode);
+
+        if (closeButton) {
+          closeButton.setAttribute("aria-label", projects.close);
+        }
+      }
+
+      translateProjectModal("my-list-modal", projects.myList);
+      translateProjectModal("daily-fortune-modal", projects.dailyFortune);
+
+      /* Tetris Teaser */
+
+      const teaserLabel = document.querySelector(".teaser-label");
+      const comingTitle = document.querySelector(".coming-soon");
+      const comingText = document.querySelector(".coming-text");
+      const dragHint = document.querySelector(".drag-hint span");
+
+      if (teaserLabel) {
+        teaserLabel.textContent = projects.teaserLabel;
+      }
+
+      if (dragHint) {
+        dragHint.textContent = projects.dragMe;
+      }
+
+      if (comingTitle && comingText) {
+        const message = projects.comingSoon;
+
+        comingTitle.setAttribute("aria-label", `${message}...`);
+
+        comingText.replaceChildren();
+
+        Array.from(message).forEach((character, index) => {
+          const letter = document.createElement("span");
+
+          letter.textContent = character === " " ? "\u00A0" : character;
+
+          letter.style.setProperty("--i", index);
+
+          if (character === " ") {
+            letter.classList.add("letter-space");
+          }
+
+          comingText.appendChild(letter);
+        });
+
+        const dots = document.querySelectorAll(".coming-dots > span");
+
+        dots.forEach((dot, index) => {
+          dot.style.setProperty("--i", message.length + index);
+        });
+      }
+    }
+
+    /* About Me */
+
+    const aboutMe = translation.aboutMe;
+
+    if (aboutMe) {
+      const aboutTitle = document.querySelector(".about-intro h2");
+
+      const hobbiesTitle = document.querySelector(".hobbies-card h2");
+
+      if (aboutTitle) {
+        aboutTitle.textContent = aboutMe.title;
+      }
+
+      if (hobbiesTitle) {
+        hobbiesTitle.textContent = aboutMe.hobbiesTitle;
+      }
+
+      /* About Text */
+
+      const aboutParagraphs = document.querySelectorAll(".about-intro p");
+
+      aboutParagraphs.forEach((paragraph, index) => {
+        const translatedText = aboutMe.paragraphs[index];
+
+        if (translatedText) {
+          paragraph.textContent = translatedText;
+        }
+      });
+
+      /* Hobbies */
+
+      const hobbyLabels = document.querySelectorAll(".hobby-item span");
+
+      hobbyLabels.forEach((label, index) => {
+        const translatedHobby = aboutMe.hobbies[index];
+
+        if (translatedHobby) {
+          label.textContent = translatedHobby;
+        }
+      });
+    }
+
+    /* Contacts */
+
+    const contactCards = document.querySelectorAll(".contact-card");
+
+    if (contactCards.length >= 3) {
+      contactCards[0].querySelector(".contact-title").textContent =
+        translation.home.email;
+
+      contactCards[1].querySelector(".contact-title").textContent =
+        translation.home.github;
+
+      contactCards[2].querySelector(".contact-title").textContent =
+        translation.home.cv;
+
+      contactCards[2].querySelector(".contact-detail").textContent =
+        translation.home.downloadCV;
+    }
+
+    /* Language Button */
+
+    if (languageButton) {
+      languageButton.textContent = lang === "uk" ? "UA" : lang.toUpperCase();
+    }
+
+    languageOptions.forEach((option) => {
+      option.classList.toggle("active", option.dataset.lang === lang);
+    });
+
+    /* Save Language */
+
+    try {
+      localStorage.setItem("portfolio-language", lang);
+    } catch (error) {
+      console.warn("Language preference could not be saved.");
+    }
+
+    closeLanguageMenu();
+  }
+
+  /* Language Events */
+
+  languageButton?.addEventListener("click", () => {
+    const isOpen = !languageMenu.hidden;
+
+    languageMenu.hidden = isOpen;
+
+    languageButton.setAttribute("aria-expanded", String(!isOpen));
+  });
+
+  languageOptions.forEach((option) => {
+    option.addEventListener("click", () => {
+      setLanguage(option.dataset.lang);
+    });
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!event.target.closest(".language-switcher")) {
+      closeLanguageMenu();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeLanguageMenu();
+    }
+  });
+
+  /* Initial Language */
+
+  let savedLanguage = "en";
+
+  try {
+    savedLanguage = localStorage.getItem("portfolio-language") || "en";
+  } catch (error) {
+    savedLanguage = "en";
+  }
+
+  setLanguage(translations[savedLanguage] ? savedLanguage : "en");
 
   /* Character Card */
 
