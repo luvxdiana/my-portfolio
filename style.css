@@ -14,6 +14,8 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Indie+Flower:wght@400&display=swap");
 
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;600&display=swap");
+
 :root {
   --black: #0f0f0f;
   --background: #202020;
@@ -1121,7 +1123,7 @@ section {
   width: 100%;
   padding: 110px 45px 120px;
   background: var(--background);
-  border-bottom: 1px solid var(--dark-green);
+  border-bottom: 1px solid rgba(248, 248, 248, 0.35);
   overflow: hidden;
 }
 
@@ -1935,4 +1937,278 @@ section {
 
 body.modal-open {
   overflow: hidden;
+}
+
+/* About Me */
+
+.about-section {
+  position: relative;
+  width: 100%;
+  min-height: calc(100svh - var(--header-height));
+  padding: 110px 45px 130px;
+  background: var(--background);
+  overflow: hidden;
+}
+
+.about-container {
+  width: min(100%, 1380px);
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
+/* About Cards */
+
+.about-card {
+  width: 100%;
+  padding: 50px 60px;
+
+  background: color-mix(in srgb, var(--dark-green) 14%, var(--background));
+
+  border: 1px solid rgba(51, 116, 24, 0.12);
+  border-radius: 22px;
+
+  transition:
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.about-card:hover {
+  border-color: rgba(93, 214, 44, 0.18);
+  box-shadow: 0 0 28px rgba(93, 214, 44, 0.04);
+}
+
+/* About Headings */
+
+.about-card h2 {
+  margin-bottom: 30px;
+
+  color: var(--white);
+  font-family: "IBM Plex Sans JP", sans-serif;
+  font-size: clamp(35px, 3vw, 46px);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* Who Am I */
+
+.about-intro p {
+  max-width: 1250px;
+  margin-bottom: 25px;
+
+  color: var(--white);
+  font-family: "IBM Plex Sans JP", sans-serif;
+  font-size: clamp(17px, 1.2vw, 20px);
+  font-weight: 400;
+  line-height: 1.8;
+}
+
+.about-intro p:last-child {
+  margin-bottom: 0;
+}
+
+/* Hobbies */
+
+.hobbies-card {
+  padding-top: 45px;
+  padding-bottom: 50px;
+}
+
+.hobbies-card h2 {
+  margin-bottom: 30px;
+}
+
+/* Hobbies List */
+
+.hobbies-list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Hobby Items */
+
+.hobby-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  min-height: 62px;
+  padding: 13px 21px;
+
+  background: rgba(51, 116, 24, 0.12);
+  border: 1px solid transparent;
+  border-radius: 15px;
+
+  color: var(--white);
+  font-family: "IBM Plex Sans JP", sans-serif;
+  font-size: 19px;
+  font-weight: 500;
+  white-space: nowrap;
+
+  cursor: default;
+
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* Hobby Icons */
+
+.hobby-item svg {
+  width: 29px;
+  height: 29px;
+  flex-shrink: 0;
+
+  color: var(--green);
+  stroke-width: 2.5;
+}
+
+/* Hobby Hover */
+
+.hobby-item:hover {
+  transform: translateY(-5px) scale(1.04);
+
+  background: rgba(51, 116, 24, 0.25);
+  border-color: var(--dark-green);
+
+  box-shadow: 0 0 18px rgba(93, 214, 44, 0.12);
+}
+
+/* About Reveal */
+
+.about-section.reveal-ready .about-card {
+  opacity: 0;
+  transform: translateY(55px);
+
+  transition:
+    opacity 1s ease,
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.about-section.reveal-ready .about-card.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* About Laptop */
+
+@media (max-width: 1450px) {
+  .about-section {
+    padding: 95px 40px 110px;
+  }
+
+  .about-container {
+    gap: 30px;
+  }
+
+  .about-card {
+    padding: 45px 48px;
+  }
+
+  .about-intro p {
+    font-size: 17px;
+  }
+
+  .hobby-item {
+    min-height: 57px;
+    padding: 12px 18px;
+    font-size: 17px;
+  }
+}
+
+/* About Tablet */
+
+@media (max-width: 1050px) {
+  .about-section {
+    min-height: auto;
+    padding: 85px 35px 100px;
+  }
+
+  .about-card {
+    padding: 38px 35px;
+  }
+
+  .about-card h2 {
+    margin-bottom: 25px;
+    font-size: 37px;
+  }
+
+  .about-intro p {
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  .hobbies-list {
+    gap: 15px;
+  }
+}
+
+/* About Mobile */
+
+@media (max-width: 600px) {
+  .about-section {
+    padding: 70px 20px 85px;
+  }
+
+  .about-container {
+    gap: 22px;
+  }
+
+  .about-card {
+    padding: 30px 22px;
+    border-radius: 17px;
+  }
+
+  .about-card h2 {
+    margin-bottom: 22px;
+    font-size: 30px;
+  }
+
+  .about-intro p {
+    margin-bottom: 20px;
+    font-size: 14px;
+    line-height: 1.85;
+  }
+
+  .hobbies-list {
+    gap: 12px;
+  }
+
+  .hobby-item {
+    min-height: 46px;
+    padding: 10px 13px;
+    gap: 8px;
+
+    border-radius: 11px;
+    font-size: 14px;
+  }
+
+  .hobby-item svg {
+    width: 21px;
+    height: 21px;
+  }
+}
+
+/* About Reduced Motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .about-section.reveal-ready .about-card {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .hobby-item,
+  .about-card {
+    transition: none;
+  }
 }
