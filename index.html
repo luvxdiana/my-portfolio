@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Diana Nikitina | Portfolio</title>
+
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="header-container">
+        <a href="#home" class="logo">
+          <img src="assets/images/logo.png" alt="@LUVXDIANA" />
+        </a>
+
+        <nav class="navigation" aria-label="Main navigation">
+          <button class="language-button" type="button">EN</button>
+
+          <a href="#home" class="nav-link active">
+            <i data-lucide="house"></i>
+            <span>HOME</span>
+          </a>
+
+          <a href="#education" class="nav-link">
+            <i data-lucide="graduation-cap"></i>
+            <span>EDUCATION</span>
+          </a>
+
+          <a href="#tech-stack" class="nav-link">
+            <i data-lucide="layers"></i>
+            <span>TECH STACK</span>
+          </a>
+
+          <a href="#projects" class="nav-link">
+            <i data-lucide="monitor"></i>
+            <span>PROJECTS</span>
+          </a>
+
+          <a href="#about-me" class="nav-link">
+            <i data-lucide="user-round"></i>
+            <span>ABOUT ME</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- Home -->
+      <section id="home" class="home">
+        <div class="tetris-background" aria-hidden="true"></div>
+
+        <div class="home-container">
+          <div class="home-content">
+            <h1 class="home-title">
+              <span id="typing-prefix">Hello, I'm </span
+              ><span id="typing-name">Diana Nikitina!</span
+              ><span class="typing-cursor" aria-hidden="true">|</span>
+            </h1>
+
+            <p class="home-description">
+              I'm a Computer Science student, developer and curious problem
+              solver. I'm interested in
+              <span class="highlight">web development</span>,
+              <span class="highlight">C#</span> and
+              <span class="highlight">game development</span>, and I enjoy
+              building projects where design, logic and code come together. I'm
+              always learning, experimenting and looking for new challenges.
+            </p>
+
+            <div class="contact-links">
+              <a href="mailto:luvxdiana06@gmail.com" class="contact-card">
+                <i data-lucide="mail"></i>
+                <span class="contact-title">Email</span>
+                <span class="contact-detail">luvxdiana06@gmail.com</span>
+              </a>
+
+              <a
+                href="https://github.com/luvxdiana"
+                class="contact-card"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i data-lucide="github"></i>
+                <span class="contact-title">GitHub</span>
+                <span class="contact-detail">luvxdiana</span>
+              </a>
+
+              <a
+                href="assets/documents/CV.docx"
+                class="contact-card"
+                download="Diana_Nikitina_CV.docx"
+              >
+                <i data-lucide="file-down"></i>
+                <span class="contact-title">CV</span>
+                <span class="contact-detail">Download CV</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="home-visual">
+            <img
+              src="assets/images/character-card.png"
+              alt="Diana Nikitina RPG character card"
+              class="character-card"
+            />
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  </body>
+</html>
