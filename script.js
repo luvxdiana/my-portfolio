@@ -185,5 +185,55 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.addEventListener("scroll", updateActiveNavigation, { passive: true });
 
+  /* Education Reveal */
+
+  const educationItems = document.querySelectorAll(
+    ".education-section .timeline-item",
+  );
+
+  if (!reducedMotion && "IntersectionObserver" in window) {
+    const educationObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          const item = entry.target;
+
+          const isEducation = item.closest(".education-column");
+
+          const direction = isEducation ? -65 : 65;
+
+          item.animate(
+            [
+              {
+                opacity: 0,
+                transform: `translateX(${direction}px)`,
+              },
+              {
+                opacity: 1,
+                transform: "translateX(0)",
+              },
+            ],
+            {
+              duration: 1200,
+              easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+              fill: "backwards",
+            },
+          );
+
+          observer.unobserve(item);
+        });
+      },
+      {
+        threshold: 0.15,
+        rootMargin: "0px 0px -10% 0px",
+      },
+    );
+
+    educationItems.forEach((item) => {
+      educationObserver.observe(item);
+    });
+  }
+
   updateActiveNavigation();
 });
