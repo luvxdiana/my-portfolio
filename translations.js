@@ -117,7 +117,7 @@ translations.en.education = {
     {
       title: "School No. 8, Lysychansk, Ukraine",
       description: "Complete General Secondary Education",
-      date: "2013–2023",
+      date: "2012–2023",
     },
   ],
 
